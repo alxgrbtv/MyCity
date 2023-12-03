@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">My City</string>
+    <string name="category_1">Category 1</string>
+    <string name="category_2">Category 2</string>
+    <string name="category_3">Category 3</string>
+    <string name="category_4">Category 4</string>
+    <string name="recommendation_1">Recommendation 1</string>
+    <string name="recommendation_2">Recommendation 2</string>
+    <string name="recommendation_3">Recommendation 3</string>
+    <string name="recommendation_4">Recommendation 4</string>
+    <string name="recommendation_5">Recommendation 5</string>
+    <string name="recommendation_6">Recommendation 6</string>
+    <string name="recommendation_7">Recommendation 7</string>
+    <string name="recommendation_8">Recommendation 8</string>
+    <string name="recommended_place">Recommended Place</string>
+    <string name="place_details">Details of the place. Has great coffee and Donuts. Also try out the Ginger scones. Offers dog friendly outdoor patio</string>
 </resources>
