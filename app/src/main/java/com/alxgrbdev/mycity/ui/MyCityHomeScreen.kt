@@ -1,10 +1,13 @@
 package com.alxgrbdev.mycity.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -34,13 +37,59 @@ import com.alxgrbdev.mycity.ui.viewmodel.MyCityUiState
 fun MyCityHomeScreen(
     myCityUiState: MyCityUiState,
     onRecommendationItemClick: (Recommendation) -> Unit,
+    onDetailScreenBackPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ListOnlyContent(
-        myCityUiState = myCityUiState,
-        onRecommendationItemClick = onRecommendationItemClick,
+    if (myCityUiState.isShowingHomepage) {
+        ListOnlyContent(
+            myCityUiState = myCityUiState,
+            onRecommendationItemClick = onRecommendationItemClick,
+            modifier = modifier
+        )
+    } else {
+        RecommendationDetailsContent(
+            myCityUiState = myCityUiState,
+            onBackPressed = onDetailScreenBackPressed,
+            modifier = modifier
+        )
+    }
+}
+
+@Composable
+fun RecommendationDetailsContent(
+    myCityUiState: MyCityUiState,
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    BackHandler {
+        onBackPressed()
+    }
+    Column(
         modifier = modifier
-    )
+    ) {
+        Image(
+            painter = painterResource(id = myCityUiState.currentSelectedRecommendation.image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+        )
+        Column(
+            modifier = Modifier
+                .padding(20.dp)
+        ) {
+            Text(
+                text = stringResource(id = myCityUiState.currentSelectedRecommendation.title),
+                style = MaterialTheme.typography.displaySmall
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = stringResource(id = myCityUiState.currentSelectedRecommendation.details),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
 }
 
 @Composable
@@ -150,7 +199,7 @@ fun RecommendationListItem(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = recommendation.title),
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }

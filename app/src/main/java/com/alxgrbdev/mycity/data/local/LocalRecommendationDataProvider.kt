@@ -5,6 +5,10 @@ import com.alxgrbdev.mycity.data.CategoryType
 import com.alxgrbdev.mycity.data.Recommendation
 
 object LocalRecommendationDataProvider {
+    val defaultRecommendation = Recommendation(
+        id = -1
+    )
+
     val allRecommendations = listOf(
         Recommendation(
             id = 0,
@@ -63,4 +67,8 @@ object LocalRecommendationDataProvider {
             type = CategoryType.Category1
         )
     )
+
+    fun get(id: Int): Recommendation? {
+        return allRecommendations.firstOrNull { it.id == id }
+    }
 }

@@ -15,9 +15,8 @@ fun MyCityApp(
 
     MyCityHomeScreen(
         myCityUiState = myCityUiState,
-        onRecommendationItemClick = {
-
-        },
+        onRecommendationItemClick = { viewModel.updateDetailsScreenStates(it) },
+        onDetailScreenBackPressed = { viewModel.resetHomeScreenStates() },
         modifier = modifier
     )
 }
