@@ -9,6 +9,4 @@ data class Recommendation(
     @StringRes val details: Int = -1,
     @DrawableRes val image: Int = -1,
     val type: CategoryType = CategoryType.Category1
-) {
-
-}
+)

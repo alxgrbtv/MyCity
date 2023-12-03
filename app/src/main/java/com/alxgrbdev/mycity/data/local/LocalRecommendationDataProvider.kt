@@ -67,8 +67,4 @@ object LocalRecommendationDataProvider {
             type = CategoryType.Category1
         )
     )
-
-    fun get(id: Int): Recommendation? {
-        return allRecommendations.firstOrNull { it.id == id }
-    }
 }

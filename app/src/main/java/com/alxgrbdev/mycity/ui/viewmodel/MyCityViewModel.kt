@@ -1,7 +1,10 @@
 package com.alxgrbdev.mycity.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.alxgrbdev.mycity.data.Category
+import com.alxgrbdev.mycity.data.PageType
 import com.alxgrbdev.mycity.data.Recommendation
+import com.alxgrbdev.mycity.data.local.LocalCategoryDataProvider
 import com.alxgrbdev.mycity.data.local.LocalRecommendationDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,9 +20,11 @@ class MyCityViewModel : ViewModel() {
     }
 
     private fun initializeUIState() {
+        val categories = LocalCategoryDataProvider.allCategories
         val recommendations = LocalRecommendationDataProvider.allRecommendations
         _uiState.value =
             MyCityUiState(
+                categories = categories,
                 recommendations = recommendations
             )
     }
@@ -28,15 +33,26 @@ class MyCityViewModel : ViewModel() {
         _uiState.update {
             it.copy(
                 currentSelectedRecommendation = recommendation,
-                isShowingHomepage = false
+                showingPage = PageType.DetailsPage
             )
         }
     }
 
-    fun resetHomeScreenStates() {
+    fun changeHomeScreenStates(pageType: PageType) {
         _uiState.update {
             it.copy(
-                isShowingHomepage = true
+                showingPage = pageType
+            )
+        }
+    }
+
+    fun updateRecommendationScreenStates(category: Category) {
+        _uiState.update { it ->
+            it.copy(
+                recommendations = LocalRecommendationDataProvider.allRecommendations
+                    .filter { recommendation -> recommendation.type == category.categoryType },
+                currentSelectedCategory = category,
+                showingPage = PageType.RecommendationsPage
             )
         }
     }

@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alxgrbdev.mycity.data.Category
+import com.alxgrbdev.mycity.data.PageType
 import com.alxgrbdev.mycity.data.Recommendation
 import com.alxgrbdev.mycity.data.local.LocalRecommendationDataProvider
 import com.alxgrbdev.mycity.ui.viewmodel.MyCityUiState
@@ -36,11 +37,11 @@ import com.alxgrbdev.mycity.ui.viewmodel.MyCityUiState
 @Composable
 fun RecommendationDetailsContent(
     myCityUiState: MyCityUiState,
-    onBackPressed: () -> Unit,
+    onBackPressed: (PageType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BackHandler {
-        onBackPressed()
+        onBackPressed(PageType.RecommendationsPage)
     }
     Column(
         modifier = modifier
@@ -71,11 +72,39 @@ fun RecommendationDetailsContent(
 }
 
 @Composable
-fun ListOnlyContent(
+fun ListOnlyCategoriesContent(
     myCityUiState: MyCityUiState,
-    onRecommendationItemClick: (Recommendation) -> Unit,
+    onCategoryItemClick: (Category) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val categories = myCityUiState.categories
+
+    LazyColumn(
+        modifier = modifier
+            .padding(vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(categories, key = { category -> category.categoryType }) { category ->
+            CategoryListItem(
+                category = category,
+                selected = false,
+                onCardClick = { onCategoryItemClick(category) }
+            )
+        }
+    }
+}
+
+@Composable
+fun ListOnlyRecommendationsContent(
+    myCityUiState: MyCityUiState,
+    onRecommendationItemClick: (Recommendation) -> Unit,
+    onBackPressed: (PageType) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    BackHandler {
+        onBackPressed(PageType.CategoriesPage)
+    }
+
     val recommendations = myCityUiState.recommendations
 
     LazyColumn(
@@ -130,7 +159,7 @@ fun CategoryListItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(96.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
             Spacer(modifier = Modifier.width(20.dp))
