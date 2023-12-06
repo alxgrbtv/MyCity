@@ -81,7 +81,7 @@ fun ListOnlyCategoriesContent(
 
     LazyColumn(
         modifier = modifier
-            .padding(vertical = 8.dp),
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories, key = { category -> category.categoryType }) { category ->
@@ -109,7 +109,7 @@ fun ListOnlyRecommendationsContent(
 
     LazyColumn(
         modifier = modifier
-            .padding(vertical = 8.dp),
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(recommendations, key = { recommendations -> recommendations.id }) { recommendation ->
@@ -124,9 +124,27 @@ fun ListOnlyRecommendationsContent(
 
 @Composable
 fun ListAndDetailContent(
-
+    myCityUiState: MyCityUiState,
+    onRecommendationItemClick: (Recommendation) -> Unit,
+    onBackPressed: (PageType) -> Unit,
+    modifier: Modifier
 ) {
-    // TODO: Implement ListAndDetail content for expanded screens
+    Row {
+        // TODO: Fix onBackPressed navigation for extended screen
+        ListOnlyRecommendationsContent(
+            myCityUiState = myCityUiState,
+            onRecommendationItemClick = onRecommendationItemClick,
+            onBackPressed = onBackPressed,
+            modifier = modifier
+                .weight(1f)
+        )
+        RecommendationDetailsContent(
+            myCityUiState = myCityUiState,
+            onBackPressed = onBackPressed,
+            modifier = modifier
+                .weight(2f)
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

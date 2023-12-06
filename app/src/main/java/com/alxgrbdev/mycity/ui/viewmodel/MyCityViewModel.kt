@@ -47,7 +47,7 @@ class MyCityViewModel : ViewModel() {
     }
 
     fun updateRecommendationScreenStates(category: Category) {
-        _uiState.update { it ->
+        _uiState.update {
             it.copy(
                 recommendations = LocalRecommendationDataProvider.allRecommendations
                     .filter { recommendation -> recommendation.type == category.categoryType },

@@ -5,10 +5,6 @@ import com.alxgrbdev.mycity.data.Category
 import com.alxgrbdev.mycity.data.CategoryType
 
 object LocalCategoryDataProvider {
-    val defaultCategory = Category(
-        id = -1
-    )
-
     val allCategories = listOf(
         Category(
             id = 0,
@@ -35,4 +31,6 @@ object LocalCategoryDataProvider {
             image = R.drawable.ph_600_400
         )
     )
+
+    val defaultCategory = allCategories[0]
 }
